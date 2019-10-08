@@ -1,0 +1,44 @@
+{
+  "name": "@crossfoam/queue",
+  "version": "1.0.0",
+  "description": "Queue Mangement",
+  "main": "dst/index.js",
+  "scripts": {
+    "lint": "tslint -p tslint.json --force",
+    "build": "tsc",
+    "typescript": "npm run lint && npm run build",
+    "watch": "nodemon "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ultrapop-de/crossfoam-queue.git"
+  },
+  "author": "sebastian-meier @seb_meier",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ultrapop-de/crossfoam-queue/issues"
+  },
+  "homepage": "https://github.com/ultrapop-de/crossfoam-queue#readme",
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules/*",
+      "dst/*"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm run typescript",
+    "ext": "ts"
+  },
+  "devDependencies": {
+    "@types/core-js": "^2.5.0",
+    "nodemon": "^1.18.9",
+    "tslint": "^5.12.1",
+    "typescript": "^3.2.2",
+    "web-ext-types": "^3.1.0"
+  },
+  "dependencies": {
+    "@crossfoam/data": "^1.0.1",
+    "@crossfoam/utils": "^1.0.1"
+  }
+}
