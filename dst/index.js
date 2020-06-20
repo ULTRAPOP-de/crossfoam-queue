@@ -13,6 +13,7 @@ var queue = {};
 var functions = {};
 var removalList = [];
 var functionDefinitions = {};
+var wakeUpCalls = null;
 /*
 
  If a func is part of a sequence of calls,
@@ -22,6 +23,12 @@ var functionDefinitions = {};
 
  */
 var init = function () {
+    if (wakeUpCalls) {
+        clearInterval(wakeUpCalls);
+    }
+    wakeUpCalls = setInterval(function () {
+        wakeUp();
+    }, 3000);
     return cfData.get("queue", {})
         .then(function (storedQueue) {
         Object.keys(storedQueue).forEach(function (func) {
@@ -152,6 +159,14 @@ var stillInQueue = function (uniqueID, func) {
     return inQueue;
 };
 exports.stillInQueue = stillInQueue;
+// check if an active queue is not being called (run every 3 minutes)
+var wakeUp = function () {
+    Object.keys(queue).forEach(function (func) {
+        if (queue[func].length > 0 && functionDefinitions[func].active === false) {
+            execute(func);
+        }
+    });
+};
 var remove = function (uniqueID) {
     Object.keys(queue).forEach(function (func) {
         for (var i = queue[func].length - 1; i >= 0; i -= 1) {

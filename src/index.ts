@@ -5,6 +5,7 @@ const queue = {};
 const functions = {};
 let removalList = [];
 const functionDefinitions = {};
+let wakeUpCalls = null;
 
 /*
 
@@ -16,6 +17,14 @@ const functionDefinitions = {};
  */
 
 const init = (): Promise<any> => {
+  if (wakeUpCalls) {
+    clearInterval(wakeUpCalls);
+  }
+
+  wakeUpCalls = setInterval(() => {
+    wakeUp();
+  }, 3000);
+
   return cfData.get("queue", {})
     .then( (storedQueue: object) => {
 
@@ -163,6 +172,15 @@ const stillInQueue = (uniqueID: string, func: string): boolean => {
 
   return inQueue;
 };
+
+// check if an active queue is not being called (run every 3 minutes)
+const wakeUp = (): void  => {
+  Object.keys(queue).forEach((func) => {
+    if (queue[func].length > 0 && functionDefinitions[func].active === false) {
+      execute(func);
+    }
+  });
+}
 
 const remove = (uniqueID: string): Promise<any> => {
   Object.keys(queue).forEach((func) => {
