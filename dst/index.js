@@ -85,6 +85,7 @@ var execute = function (func) {
                 _loop_1(i);
             }
         }
+        // tslint:disable-next-line:no-console
         console.log(Date(), func, queue[func][0]);
         functions[func].apply(null, (functionDefinitions[func].passDown)
             ? __spreadArrays(queue[func][0][0], [queue[func][0][1], queue[func][0][2], { call: call, stillInQueue: stillInQueue }]) : queue[func][0][0])

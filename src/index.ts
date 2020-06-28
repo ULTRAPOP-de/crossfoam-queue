@@ -90,6 +90,7 @@ const execute = (func: string): void => {
       }
     }
 
+    // tslint:disable-next-line:no-console
     console.log(Date(), func, queue[func][0]);
 
     functions[func].apply(null, (functionDefinitions[func].passDown)
@@ -180,7 +181,7 @@ const wakeUp = (): void  => {
       execute(func);
     }
   });
-}
+};
 
 const remove = (uniqueID: string): Promise<any> => {
   Object.keys(queue).forEach((func) => {
