@@ -101,8 +101,11 @@ var execute = function (func) {
                 execute(func);
             });
         }).catch(function (err) {
-            throw err;
-            // TDOO:   Timeout and try again...
+            // if network problem. try again
+            setTimeout(function () {
+                execute(func);
+            }, 10000);
+            // TODO:   catch other problems and handle
             //         Depending on err, create notification
         });
     }

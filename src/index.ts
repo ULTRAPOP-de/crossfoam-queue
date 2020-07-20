@@ -108,9 +108,12 @@ const execute = (func: string): void => {
             execute(func);
           });
       }).catch((err) => {
-        throw err;
+        // if network problem. try again
+        setTimeout(() => {
+          execute(func);
+        }, 10000);
 
-        // TDOO:   Timeout and try again...
+        // TODO:   catch other problems and handle
         //         Depending on err, create notification
       });
   }
